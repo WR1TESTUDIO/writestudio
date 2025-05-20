@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="WR1TE Studio - Rewolucja w tworzeniu piosenek. Stwórz swój utwór od podstaw z naszym zespołem!">
+  <meta property="og:title" content="WR1TE Studio" />
+  <meta property="og:description" content="Twoje marzenia są na wyciągnięcie ręki – wystarczy po nie sięgnąć." />
+  <meta property="og:image" content="img/baneru.jpg" />
+  <meta property="og:url" content="https://wr1testudio.pl" />
+  <link rel="icon" type="image/png" href="img/ikony.png">
+  <title>WR1TE Studio</title>
+  <style>
+    body {
+      font-family: 'Times New Roman', serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      color: #000;
+    }
+    header, footer, section {
+      text-align: center;
+      padding: 20px;
+    }
+    .logo {
+      width: 180px;
+      margin: 20px auto;
+      display: block;
+      animation: fadeIn 2s ease-in-out;
+    }
+    h1, h2, h3 {
+      font-style: italic;
+    }
+    .form-box {
+      background: #000;
+      color: #fff;
+      width: 90%;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    input, textarea {
+      width: 90%;
+      margin: 10px 0;
+      padding: 10px;
+      font-family: 'Times New Roman', serif;
+      font-size: 16px;
+    }
+    .file-input {
+      color: #00f;
+      font-style: italic;
+    }
+    .team {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .team-member {
+      background: #000;
+      color: #fff;
+      border-radius: 50px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: fadeIn 1s ease forwards;
+    }
+    .team-member img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+    footer img {
+      width: 30px;
+      margin: 10px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="img/logo.png" alt="WR1TE Studio logo" class="logo">
+    <h2><em>Rewolucja w tworzeniu piosenek</em></h2>
+  </header>
+
+  <section>
+    <h3><strong>O nas</strong></h3>
+    <p>WR1TE to coś więcej niż muzyka – to prawdziwe więzi, dzięki którym muzyka wypływa z duszy.<br>
+    Z nami stworzysz utwór od podstaw – od bitu i naszego zaplecza po dystrybucję i identyfikację wizualną.</p>
+    <p>To tu zrobisz to wszystko, a zapłacisz najmniejszą możliwą cenę na rynku.<br>
+    Dajesz inspirację – my tworzymy numer na twoich zasadach. Jesteśmy otwarci na współpracę z naszymi artystami.</p>
+    <h3><em>Twoje marzenia są na wyciągnięcie ręki – wystarczy po nie sięgnąć.</em></h3>
+  </section>
+
+  <section>
+    <h3><strong>Formularz Kontaktowy</strong></h3>
+    <form class="form-box" action="mailto:kontakt.wr1te@gmail.com" method="POST" enctype="text/plain">
+      <input type="text" name="Imię/Pseudonim" placeholder="Imię/Pseudonim artystyczny" required><br>
+      <input type="text" name="Instagram/Streaming" placeholder="Link do Instagram/Streaming" required><br>
+      <input type="file" name="plik" class="file-input"><br>
+      <textarea name="wiadomosc" placeholder="Wiadomość:" rows="5"></textarea><br>
+      <input type="submit" value="Wyślij">
+    </form>
+  </section>
+
+  <section>
+    <h3><strong>FAQ</strong></h3>
+    <p><strong>Do kogo jest skierowany projekt WRITE Studio?</strong><br>
+    <em>Projekt kierujemy głównie do osób młodych, aczkolwiek nigdy nie odmówimy współpracy ze względu na wiek.</em></p>
+    <p><strong>Jak wygląda proces płatności?</strong><br>
+    <em>Po ustaleniu szczegółów projektu wymagamy przedpłaty w wysokości 50% kwoty.</em></p>
+    <p><strong>Czy artysta może być zaangażowany twórczo?</strong><br>
+    <em>Tak. Nie ma ku temu żadnych przeciwwskazań.</em></p>
+    <p><strong>Dlaczego wybrać WRITE?</strong><br>
+    <em>Bo nikt nie rozumie tak dobrze młodych osób jak inne młode osoby. Nasz zespół to młoda krew z pasją i profesjonalizmem.</em></p>
+  </section>
+
+  <section>
+    <h3><strong>Nasz zespół:</strong></h3>
+    <div class="team">
+      <div class="team-member"><img src="img/szost.jpg" alt="Szost"><span>Szost (muzyka, teksty, produkcja)</span></div>
+      <div class="team-member"><img src="img/nates.jpg" alt="Nate"><span>Nateś (muzyka, teksty, produkcja)</span></div>
+      <div class="team-member"><img src="img/sandra.jpg" alt="Sandra"><span>Sandra Fieske (muzyka, teksty)</span></div>
+      <div class="team-member"><img src="img/lesser.jpg" alt="Lesser"><span>Lesser (visuale, grafika, identyfikacja wizualna)</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Kontakt e-mailowy:<br>
+    W sprawach innych niż artystyczne – <a href="mailto:kontakt.wr1te@gmail.com">kontakt.wr1te@gmail.com</a></p>
+    <p>
+      <img src="img/ig.png" alt="Instagram">
+      <img src="img/fb.png" alt="Facebook">
+    </p>
+    <p>© 2025 WR1TE Studio. Wszystkie prawa zastrzeżone.</p>
+  </footer>
+</body>
+</html>
