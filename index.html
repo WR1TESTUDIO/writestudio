@@ -99,49 +99,56 @@
 
 <meta charset="UTF-8">
 
-<form
-  action="https://formspree.io/f/mgvkkwwj"
-  method="POST"
-  enctype="multipart/form-data"
-  style="font-family: 'Times New Roman', Times, serif; background: #000; color: #fff; padding: 30px; border-radius: 20px; max-width: 500px; margin: 0 auto; box-sizing: border-box;"
->
-  <h2 style="text-align: center; margin-bottom: 25px; font-size: 22px;">Formularz kontaktowy</h2>
+<div style="display: flex; justify-content: center; margin: 40px 0;">
+  <form
+    action="https://formspree.io/f/mgvkkwwj"
+    method="POST"
+    enctype="multipart/form-data"
+    style="
+      font-family: 'Times New Roman', Times, serif;
+      background-color: #000;
+      color: #fff;
+      padding: 25px 20px;
+      border-radius: 18px;
+      max-width: 440px;
+      width: 100%;
+      box-sizing: border-box;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    "
+  >
+    <h2 style="text-align: center; margin-bottom: 20px; font-size: 20px; font-weight: bold;">
+      Formularz kontaktowy
+    </h2>
 
-  <div style="margin-bottom: 15px;">
-    <label for="name" style="display: block; margin-bottom: 4px;">Twoje imię lub pseudonim artystyczny:</label>
+    <label for="name" style="font-size: 14px; margin-bottom: 5px; display: block;">Twoje imię lub pseudonim artystyczny:</label>
     <input type="text" id="name" name="name" required
-      style="width: 100%; padding: 6px 10px; border-radius: 8px; border: none; font-size: 14px;">
-  </div>
+      style="width: 100%; padding: 5px 10px; border-radius: 6px; border: none; margin-bottom: 15px; font-size: 13px;">
 
-  <div style="margin-bottom: 15px;">
-    <label for="instagram" style="display: block; margin-bottom: 4px;">Link do Twojego profilu na Instagramie:</label>
+    <label for="instagram" style="font-size: 14px; margin-bottom: 5px; display: block;">Link do Twojego profilu na Instagramie:</label>
     <input type="url" id="instagram" name="instagram"
-      style="width: 100%; padding: 6px 10px; border-radius: 8px; border: none; font-size: 14px;">
-  </div>
+      style="width: 100%; padding: 5px 10px; border-radius: 6px; border: none; margin-bottom: 15px; font-size: 13px;">
 
-  <div style="margin-bottom: 15px;">
-    <label for="youtube" style="display: block; margin-bottom: 4px;">Link do kanału YouTube lub serwisu streamingowego z Twoją muzyką:</label>
+    <label for="youtube" style="font-size: 14px; margin-bottom: 5px; display: block;">Link do kanału YouTube lub serwisu streamingowego z Twoją muzyką:</label>
     <input type="url" id="youtube" name="youtube"
-      style="width: 100%; padding: 6px 10px; border-radius: 8px; border: none; font-size: 14px;">
-  </div>
+      style="width: 100%; padding: 5px 10px; border-radius: 6px; border: none; margin-bottom: 15px; font-size: 13px;">
 
-  <div style="margin-bottom: 15px;">
-    <label for="file" style="display: block; margin-bottom: 4px;">Plik muzyczny (jeśli nie masz opublikowanej muzyki):</label>
+    <label for="file" style="font-size: 14px; margin-bottom: 5px; display: block;">Plik muzyczny (jeśli nie masz opublikowanej muzyki):</label>
     <input type="file" id="file" name="file" accept="audio/*"
-      style="width: 100%; padding: 6px 10px; border-radius: 8px; border: none; background: #fff; color: #000; font-size: 14px;">
-  </div>
+      style="width: 100%; padding: 5px 10px; border-radius: 6px; border: none; background: #fff; color: #000; margin-bottom: 15px; font-size: 13px;">
 
-  <div style="margin-bottom: 20px;">
-    <label for="message" style="display: block; margin-bottom: 4px;">Wiadomość:</label>
+    <label for="message" style="font-size: 14px; margin-bottom: 5px; display: block;">Wiadomość:</label>
     <textarea id="message" name="message" required
-      style="width: 100%; padding: 8px 10px; border-radius: 8px; border: none; height: 100px; font-size: 14px;"></textarea>
-  </div>
+      style="width: 100%; padding: 8px 10px; border-radius: 6px; border: none; height: 100px; font-size: 13px; margin-bottom: 20px;"></textarea>
 
-  <div style="text-align: center;">
-    <button type="submit"
-      style="background: #fff; color: #000; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 14px;">Wyślij</button>
-  </div>
-</form>
+    <div style="text-align: center;">
+      <button type="submit"
+        style="background: #fff; color: #000; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">
+        Wyślij
+      </button>
+    </div>
+  </form>
+</div>
+
 
 
 
