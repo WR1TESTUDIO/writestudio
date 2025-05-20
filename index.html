@@ -97,16 +97,32 @@
     <h3><em>Twoje marzenia są na wyciągnięcie ręki – wystarczy po nie sięgnąć.</em></h3>
   </section>
 
-  <section>
-    <h3><strong>Formularz Kontaktowy</strong></h3>
-    <form class="form-box" action="mailto:kontakt.wr1te@gmail.com" method="POST" enctype="text/plain">
-      <input type="text" name="Imię/Pseudonim" placeholder="Imię/Pseudonim artystyczny" required><br>
-      <input type="text" name="Instagram/Streaming" placeholder="Link do Instagram/Streaming" required><br>
-      <input type="file" name="plik" class="file-input"><br>
-      <textarea name="wiadomosc" placeholder="Wiadomość:" rows="5"></textarea><br>
-      <input type="submit" value="Wyślij">
-    </form>
-  </section>
+<form
+  action="https://formspree.io/f/mgvkkwwj"
+  method="POST"
+  enctype="multipart/form-data"
+  style="font-family: 'Times New Roman', Times, serif; background: #000; color: #fff; padding: 20px; border-radius: 20px; max-width: 600px; margin: 0 auto;"
+>
+  <h2 style="text-align:center; margin-bottom: 20px;">Formularz kontaktowy:</h2>
+
+  <label for="name" style="display:block; margin-bottom:5px;">Twoje imię/pseudonim artystyczny:</label>
+  <input type="text" id="name" name="name" required style="width:100%; padding:10px; border-radius:10px; border:none; margin-bottom:15px;">
+
+  <label for="instagram" style="display:block; margin-bottom:5px;">Link do twojego Instagrama:</label>
+  <input type="url" id="instagram" name="instagram" style="width:100%; padding:10px; border-radius:10px; border:none; margin-bottom:15px;">
+
+  <label for="youtube" style="display:block; margin-bottom:5px;">Link do kanału YouTube/serwisu streamingowego z twoją muzyką:</label>
+  <input type="url" id="youtube" name="youtube" style="width:100%; padding:10px; border-radius:10px; border:none; margin-bottom:15px;">
+
+  <label for="file" style="display:block; margin-bottom:5px;">Plik muzyczny (jeśli nie masz opublikowanej muzyki):</label>
+  <input type="file" id="file" name="file" accept="audio/*" style="width:100%; padding:10px; border-radius:10px; border:none; margin-bottom:15px; background:#fff; color:#000;">
+
+  <label for="message" style="display:block; margin-bottom:5px;">Wiadomość:</label>
+  <textarea id="message" name="message" required style="width:100%; padding:10px; border-radius:10px; border:none; margin-bottom:20px;"></textarea>
+
+  <button type="submit" style="background:#fff; color:#000; border:none; padding:12px 20px; border-radius:10px; cursor:pointer; font-weight:bold;">Wyślij</button>
+</form>
+
 
   <section>
     <h3><strong>FAQ</strong></h3>
