@@ -18,45 +18,88 @@
       background-color: #fff;
       color: #000;
     }
+
     header, footer, section {
       text-align: center;
       padding: 20px;
     }
+
     .logo {
       width: 180px;
       margin: 20px auto;
       display: block;
       animation: fadeIn 2s ease-in-out;
     }
+
     h1, h2, h3 {
       font-style: italic;
     }
+
+    .form-container {
+      display: flex;
+      justify-content: center;
+      margin: 40px 0;
+    }
+
     .form-box {
-      background: #000;
+      background-color: #000;
       color: #fff;
-      width: 90%;
-      max-width: 500px;
-      margin: 0 auto;
-      padding: 20px;
-      border-radius: 10px;
+      padding: 30px;
+      border-radius: 18px;
+      max-width: 480px;
+      width: 100%;
+      box-sizing: border-box;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     }
-    input, textarea {
-      width: 90%;
-      margin: 10px 0;
+
+    .form-box h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .form-box label {
+      font-size: 15px;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .form-box input,
+    .form-box textarea {
+      width: 100%;
       padding: 10px;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 20px;
+      font-size: 14px;
       font-family: 'Times New Roman', serif;
-      font-size: 16px;
+      box-sizing: border-box;
     }
-    .file-input {
-      color: #00f;
-      font-style: italic;
+
+    .form-box textarea {
+      height: 100px;
+      resize: none;
     }
+
+    .form-box button {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
     .team {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
     }
+
     .team-member {
       background: #000;
       color: #fff;
@@ -67,15 +110,18 @@
       gap: 10px;
       animation: fadeIn 1s ease forwards;
     }
+
     .team-member img {
       width: 40px;
       height: 40px;
       border-radius: 50%;
     }
+
     footer img {
       width: 30px;
       margin: 10px;
     }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -97,56 +143,33 @@
     <h3><em>Twoje marzenia są na wyciągnięcie ręki – wystarczy po nie sięgnąć.</em></h3>
   </section>
 
-<meta charset="UTF-8">
+  <!-- FORMULARZ -->
+  <div class="form-container">
+    <form
+      action="https://formspree.io/f/mgvkkwwj"
+      method="POST"
+      enctype="multipart/form-data"
+      class="form-box"
+    >
+      <h2>Formularz kontaktowy</h2>
 
-<div style="display: flex; justify-content: center; margin: 40px 0;">
-  <form
-    action="https://formspree.io/f/mgvkkwwj"
-    method="POST"
-    enctype="multipart/form-data"
-    style="
-      font-family: 'Times New Roman', Times, serif;
-      background-color: #000;
-      color: #fff;
-      padding: 25px 20px;
-      border-radius: 18px;
-      max-width: 440px;
-      width: 100%;
-      box-sizing: border-box;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    "
-  >
-    <h2 style="text-align: center; margin-bottom: 20px; font-size: 20px; font-weight: bold;">
-      Formularz kontaktowy
-    </h2>
+      <label for="name">Twoje imię lub pseudonim artystyczny:</label>
+      <input type="text" id="name" name="name" required>
 
-    <label for="name" style="font-size: 14px; margin-bottom: 5px; display: block;">Twoje imię lub pseudonim artystyczny:</label>
-    <input type="text" id="name" name="name" required
-      style="width: 100%; padding: 5px 10px; border-radius: 6px; border: none; margin-bottom: 15px; font-size: 13px;">
+      <label for="instagram">Link do Twojego profilu na Instagramie:</label>
+      <input type="url" id="instagram" name="instagram">
 
-    <label for="instagram" style="font-size: 14px; margin-bottom: 5px; display: block;">Link do Twojego profilu na Instagramie:</label>
-    <input type="url" id="instagram" name="instagram"
-      style="width: 100%; padding: 5px 10px; border-radius: 6px; border: none; margin-bottom: 15px; font-size: 13px;">
+      <label for="youtube">Link do kanału YouTube lub serwisu streamingowego z Twoją muzyką:</label>
+      <input type="url" id="youtube" name="youtube">
 
-    <label for="youtube" style="font-size: 14px; margin-bottom: 5px; display: block;">Link do kanału YouTube lub serwisu streamingowego z Twoją muzyką:</label>
-    <input type="url" id="youtube" name="youtube"
-      style="width: 100%; padding: 5px 10px; border-radius: 6px; border: none; margin-bottom: 15px; font-size: 13px;">
+      <label for="message">Wiadomość:</label>
+      <textarea id="message" name="message" required></textarea>
 
-    <label for="message" style="font-size: 14px; margin-bottom: 5px; display: block;">Wiadomość:</label>
-    <textarea id="message" name="message" required
-      style="width: 100%; padding: 8px 10px; border-radius: 6px; border: none; height: 100px; font-size: 13px; margin-bottom: 20px;"></textarea>
-
-    <div style="text-align: center;">
-      <button type="submit"
-        style="background: #fff; color: #000; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px;">
-        Wyślij
-      </button>
-    </div>
-  </form>
-</div>
-
-
-
+      <div style="text-align: center;">
+        <button type="submit">Wyślij</button>
+      </div>
+    </form>
+  </div>
 
   <section>
     <h3><strong>FAQ</strong></h3>
