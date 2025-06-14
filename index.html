@@ -144,12 +144,15 @@
   </section>
 
   <!-- FORMULARZ -->
-  <div class="form-container">
-    <form
-      action="https://formspree.io/f/mgvkkwwj"
-      method="POST"
-      enctype="multipart/form-data"
-      class="form-box"
+ <form action="https://formspree.io/f/mgvkkwwj" method="POST">
+<label for="email">Twój e-mail:</label>
+<input type="email" name="email" required><br>
+
+<label for="message">Wiadomość:</label>
+<textarea name="message" required></textarea><br>
+
+<button type="submit">Wyślij</button>
+</form>
     >
       <h2>Formularz kontaktowy</h2>
 
