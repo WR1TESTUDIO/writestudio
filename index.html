@@ -143,37 +143,50 @@
     <h3><em>Twoje marzenia są na wyciągnięcie ręki – wystarczy po nie sięgnąć.</em></h3>
   </section>
 
-  <!-- FORMULARZ -->
- <form action="https://formspree.io/f/mgvkkwwj" method="POST">
-<label for="email">Twój e-mail:</label>
-<input type="email" name="email" required><br>
+<div class="form-container">
+  <form
+    action="https://formspree.io/f/mgvkkwwj"
+    method="POST"
+    enctype="multipart/form-data"
+    class="form-box"
+  >
+    <h2>Formularz kontaktowy</h2>
 
-<label for="message">Wiadomość:</label>
-<textarea name="message" required></textarea><br>
+    <!-- Antybot -->
+    <input type="text" name="_gotcha" style="display:none">
 
-<button type="submit">Wyślij</button>
-</form>
-    >
-      <h2>Formularz kontaktowy</h2>
+    <!-- Imię/pseudonim -->
+    <label for="name">Twoje imię lub pseudonim artystyczny:</label>
+    <input type="text" id="name" name="name" required>
 
-      <label for="name">Twoje imię lub pseudonim artystyczny:</label>
-      <input type="text" id="name" name="name" required>
+    <!-- Email (do odpowiedzi) -->
+    <label for="email">Twój e-mail (do odpowiedzi):</label>
+    <input type="email" id="email" name="email" required>
 
-      <label for="instagram">Link do Twojego profilu na Instagramie:</label>
-      <input type="url" id="instagram" name="instagram">
+    <!-- Instagram -->
+    <label for="instagram">Link do Twojego profilu na Instagramie:</label>
+    <input type="url" id="instagram" name="instagram">
 
-      <label for="youtube">Link do kanału YouTube lub serwisu streamingowego z Twoją muzyką:</label>
-      <input type="url" id="youtube" name="youtube">
+    <!-- YouTube -->
+    <label for="youtube">Link do kanału YouTube lub serwisu streamingowego z Twoją muzyką:</label>
+    <input type="url" id="youtube" name="youtube">
 
-      <label for="message">Wiadomość:</label>
-      <textarea id="message" name="message" required></textarea>
+    <!-- Wiadomość -->
+    <label for="message">Wiadomość:</label>
+    <textarea id="message" name="message" required></textarea>
 
-      <div style="text-align: center;">
-        <button type="submit">Wyślij</button>
-      </div>
-    </form>
-  </div>
+    <!-- Ukryte pole do ustawienia maila jako Reply-To -->
+    <input type="hidden" name="_replyto" value="">
 
+    <!-- Temat wiadomości (opcjonalnie) -->
+    <input type="hidden" name="_subject" value="Nowa wiadomość z WR1TE Studio">
+
+    <div style="text-align: center;">
+      <button type="submit">Wyślij</button>
+    </div>
+  </form>
+</div>
+  
   <section>
     <h3><strong>FAQ</strong></h3>
     <p><strong>Do kogo jest skierowany projekt WRITE Studio?</strong><br>
