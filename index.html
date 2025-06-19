@@ -2,193 +2,237 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="WR1TE Studio - Rewolucja w tworzeniu piosenek. Stwórz swój utwór od podstaw z naszym zespołem!">
+  
+  <!-- Favicon (logo w zakładce) -->
+  <link rel="icon" type="image/jpeg" href="img/ikony.jpg" />
+
+  <!-- Meta og:image dla social media / messenger -->
   <meta property="og:title" content="WR1TE Studio" />
   <meta property="og:description" content="Twoje marzenia są na wyciągnięcie ręki – wystarczy po nie sięgnąć." />
-  <meta property="og:image" content="img/baneru.jpg" />
+  <meta property="og:image" content="img/banner-plugin.jpg" />
   <meta property="og:url" content="https://twoja-strona.pl" />
-  <link rel="icon" type="image/png" href="img/ikony.png">
+
   <title>WR1TE Studio</title>
+
   <style>
+    /* CSS taki sam jak wcześniej, z animowanym gradientem przycisku itd. */
     body {
-      font-family: 'Times New Roman', serif;
+      font-family: Arial, Helvetica, sans-serif;
       margin: 0;
       padding: 0;
       background-color: #fff;
       color: #000;
     }
-
     header, footer, section {
       text-align: center;
       padding: 20px;
     }
-
+    h1, h2, h3 {
+      color: white;
+      background: linear-gradient(90deg, #2ecc71, #3498db);
+      display: inline-block;
+      padding: 10px 25px;
+      border-radius: 18px;
+      font-weight: 700;
+      margin: 15px 0;
+      user-select: none;
+    }
     .logo {
       width: 180px;
       margin: 20px auto;
       display: block;
       animation: fadeIn 2s ease-in-out;
     }
-
-    h1, h2, h3 {
-      font-style: italic;
-    }
-
     .form-container {
       display: flex;
       justify-content: center;
       margin: 40px 0;
     }
-
     .form-box {
-      background-color: #000;
-      color: #fff;
+      background-color: #fff;
+      color: #000;
       padding: 30px;
       border-radius: 18px;
       max-width: 480px;
       width: 100%;
       box-sizing: border-box;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      border: 3px solid;
+      border-image-slice: 1;
+      border-width: 3px;
+      border-image-source: linear-gradient(90deg, #2ecc71, #3498db);
     }
-
     .form-box h2 {
       text-align: center;
       margin-bottom: 25px;
       font-size: 22px;
-      font-weight: bold;
+      font-weight: 700;
+      color: #000;
+      background: none;
+      border-radius: 0;
+      display: block;
+      padding: 0;
     }
-
     .form-box label {
       font-size: 15px;
       margin-bottom: 6px;
       display: block;
+      font-weight: 600;
     }
-
     .form-box input,
     .form-box textarea {
       width: 100%;
       padding: 10px;
       border-radius: 6px;
-      border: none;
+      border: 1.5px solid #ccc;
       margin-bottom: 20px;
       font-size: 14px;
-      font-family: 'Times New Roman', serif;
+      font-family: Arial, Helvetica, sans-serif;
       box-sizing: border-box;
+      transition: border-color 0.3s ease;
     }
-
+    .form-box input:focus,
+    .form-box textarea:focus {
+      outline: none;
+      border-color: #2ecc71;
+      box-shadow: 0 0 8px rgba(46, 204, 113, 0.5);
+    }
     .form-box textarea {
       height: 100px;
       resize: none;
     }
-
     .form-box button {
-      background: #fff;
-      color: #000;
+      background: linear-gradient(270deg, #2ecc71, #3498db, #2ecc71);
+      background-size: 600% 600%;
+      color: #fff;
       border: none;
       padding: 10px 25px;
       border-radius: 6px;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 700;
       font-size: 15px;
+      width: 100%;
+      max-width: 200px;
+      margin: 0 auto;
+      display: block;
+      animation: gradientAnimation 10s ease infinite;
+      transition: background-position 0.3s ease;
     }
-
+    .form-box button:hover {
+      background-position: 100% 0;
+    }
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
     .team {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
     }
-
     .team-member {
-      background: #000;
-      color: #fff;
+      background: linear-gradient(90deg, #2ecc71, #3498db);
+      color: white;
       border-radius: 50px;
       padding: 10px 20px;
       display: flex;
       align-items: center;
       gap: 10px;
       animation: fadeIn 1s ease forwards;
+      user-select: none;
+      min-width: 220px;
+      max-width: 280px;
+      box-sizing: border-box;
+      font-weight: 600;
     }
-
     .team-member img {
       width: 40px;
       height: 40px;
       border-radius: 50%;
+      border: 2px solid white;
+      flex-shrink: 0;
     }
-
-    footer img {
-      width: 30px;
-      margin: 10px;
+    footer p a {
+      color: #3498db;
+      text-decoration: none;
+      font-weight: 600;
     }
-
+    footer p a:hover {
+      text-decoration: underline;
+    }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 520px) {
+      .team {
+        flex-direction: column;
+        align-items: center;
+      }
+      .team-member {
+        max-width: 90vw;
+        min-width: auto;
+      }
+      .form-box {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="img/logo.png" alt="WR1TE Studio logo" class="logo">
-    <h2><em>Rewolucja w tworzeniu piosenek</em></h2>
+    <img src="img/logo.svg" alt="WR1TE Studio logo" class="logo" />
+    <h2>Rewolucja w tworzeniu piosenek</h2>
   </header>
 
   <section>
-    <h3><strong>O nas</strong></h3>
+    <h3>O nas</h3>
     <p>WR1TE to coś więcej niż muzyka – to prawdziwe więzi, dzięki którym muzyka wypływa z duszy.<br>
     Z nami stworzysz utwór od podstaw – od bitu i naszego zaplecza po dystrybucję i identyfikację wizualną.</p>
     <p>To tu zrobisz to wszystko, a zapłacisz najmniejszą możliwą cenę na rynku.<br>
     Dajesz inspirację – my tworzymy numer na twoich zasadach. Jesteśmy otwarci na współpracę z naszymi artystami.</p>
-    <h3><em>Twoje marzenia są na wyciągnięcie ręki – wystarczy po nie sięgnąć.</em></h3>
+    <h3>Twoje marzenia są na wyciągnięcie ręki – wystarczy po nie sięgnąć.</h3>
   </section>
 
-<div class="form-container">
-  <form
-    action="https://formspree.io/f/mgvkkwwj"
-    method="POST"
-    enctype="multipart/form-data"
-    class="form-box"
-  >
-    <h2>Formularz kontaktowy</h2>
+  <div class="form-container">
+    <form
+      action="https://formspree.io/f/mgvkkwwj"
+      method="POST"
+      enctype="multipart/form-data"
+      class="form-box"
+    >
+      <h2>Formularz kontaktowy</h2>
+      <input type="text" name="_gotcha" style="display:none" />
+      <label for="name">Twoje imię lub pseudonim artystyczny:</label>
+      <input type="text" id="name" name="name" required />
+      <label for="email">Twój e-mail (do odpowiedzi):</label>
+      <input type="email" id="email" name="email" required />
+      <label for="instagram">Link do Twojego profilu na Instagramie:</label>
+      <input type="url" id="instagram" name="instagram" />
+      <label for="youtube">Link do kanału YouTube lub serwisu streamingowego z Twoją muzyką:</label>
+      <input type="url" id="youtube" name="youtube" />
+      <label for="message">Wiadomość:</label>
+      <textarea id="message" name="message" required></textarea>
+      <input type="hidden" name="_replyto" value="" />
+      <input type="hidden" name="_subject" value="Nowa wiadomość z WR1TE Studio" />
+      <div style="text-align: center;">
+        <button type="submit">Wyślij</button>
+      </div>
+    </form>
+  </div>
 
-    <!-- Antybot -->
-    <input type="text" name="_gotcha" style="display:none">
-
-    <!-- Imię/pseudonim -->
-    <label for="name">Twoje imię lub pseudonim artystyczny:</label>
-    <input type="text" id="name" name="name" required>
-
-    <!-- Email (do odpowiedzi) -->
-    <label for="email">Twój e-mail (do odpowiedzi):</label>
-    <input type="email" id="email" name="email" required>
-
-    <!-- Instagram -->
-    <label for="instagram">Link do Twojego profilu na Instagramie:</label>
-    <input type="url" id="instagram" name="instagram">
-
-    <!-- YouTube -->
-    <label for="youtube">Link do kanału YouTube lub serwisu streamingowego z Twoją muzyką:</label>
-    <input type="url" id="youtube" name="youtube">
-
-    <!-- Wiadomość -->
-    <label for="message">Wiadomość:</label>
-    <textarea id="message" name="message" required></textarea>
-
-    <!-- Ukryte pole do ustawienia maila jako Reply-To -->
-    <input type="hidden" name="_replyto" value="">
-
-    <!-- Temat wiadomości (opcjonalnie) -->
-    <input type="hidden" name="_subject" value="Nowa wiadomość z WR1TE Studio">
-
-    <div style="text-align: center;">
-      <button type="submit">Wyślij</button>
-    </div>
-  </form>
-</div>
-  
   <section>
-    <h3><strong>FAQ</strong></h3>
+    <h3>FAQ</h3>
     <p><strong>Do kogo jest skierowany projekt WRITE Studio?</strong><br>
     <em>Projekt kierujemy głównie do osób młodych, aczkolwiek nigdy nie odmówimy współpracy ze względu na wiek.</em></p>
     <p><strong>Jak wygląda proces płatności?</strong><br>
@@ -200,28 +244,46 @@
   </section>
 
   <section>
-    <h3><strong>Nasz zespół:</strong></h3>
+    <h3>Nasz zespół</h3>
     <div class="team">
-      <div class="team-member"><img src="img/szost.jpg" alt="Szost"><span>Szost (muzyka, teksty, produkcja)</span></div>
-      <div class="team-member"><img src="img/nates.jpg" alt="Nate"><span>NateS (muzyka, teksty, produkcja)</span></div>
-      <div class="team-member"><img src="img/sandra.jpg" alt="Sandra"><span>Sandra Fieske (muzyka, teksty)</span></div>
-      <div class="team-member"><img src="img/amelia.jpg" alt="Amelia"><span>Amelia (teksty, kompozycja)</span></div>
-      <div class="team-member"><img src="img/lesser.jpg" alt="Lesser"><span>Lesser (visuale, grafika, identyfikacja wizualna)</span></div>
+      <div class="team-member">
+        <img src="img/szost.jpg" alt="Szost" />
+        <span>Szost (muzyka, teksty, produkcja)</span>
+      </div>
+      <div class="team-member">
+        <img src="img/nates.jpg" alt="NateS" />
+        <span>NateS (muzyka, teksty, produkcja)</span>
+      </div>
+      <div class="team-member">
+        <img src="img/sandra_fieske.jpg" alt="Sandra Fieske" />
+        <span>Sandra Fieske (muzyka, teksty)</span>
+      </div>
+      <div class="team-member">
+        <img src="img/amelia.jpg" alt="Amelia" />
+        <span>Amelia (teksty, kompozycja)</span>
+      </div>
+      <div class="team-member">
+        <img src="img/lesser.jpg" alt="Lesser" />
+        <span>Lesser (visuale, grafika, identyfikacja wizualna)</span>
+      </div>
     </div>
   </section>
-
-  <footer>
-    <p>Kontakt e-mailowy:<br>
-    W sprawach innych niż artystyczne – <a href="mailto:kontakt.wr1te@gmail.com">kontakt.wr1te@gmail.com</a></p>
-    <p>
-      <a href="https://www.instagram.com/wr1te_studio" target="_blank" rel="noopener noreferrer">
-        <img src="img/ig.png" alt="Instagram">
+<header>
+     <!-- Instagram SVG -->
+      <a href="https://www.instagram.com/wr1te_studio" target="_blank" rel="noopener noreferrer" aria-label="Instagram WR1TE Studio">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="#3498db" xmlns="http://www.w3.org/2000/svg" role="img">
+          <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 2.75a4.25 4.25 0 1 0 0 8.5 4.25 4.25 0 0 0 0-8.5zm0 1.5a2.75 2.75 0 1 1 0 5.5 2.75 2.75 0 0 1 0-5.5zm4.75-.75a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5z"/>
+        </svg>
       </a>
-      <a href="https://www.facebook.com/wr1te.studio" target="_blank" rel="noopener noreferrer">
-        <img src="img/fb.png" alt="Facebook">
+
+      <!-- Facebook SVG -->
+      <a href="https://www.facebook.com/wr1te.studio" target="_blank" rel="noopener noreferrer" aria-label="Facebook WR1TE Studio">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="#3498db" xmlns="http://www.w3.org/2000/svg" role="img">
+          <path d="M22 12a10 10 0 1 0-11.5 9.85v-6.96H8v-2.9h2.5v-2.2c0-2.47 1.5-3.83 3.8-3.83 1.1 0 2.25.2 2.25.2v2.5h-1.28c-1.26 0-1.65.78-1.65 1.57v1.76h2.81l-.45 2.9h-2.36v6.96A10 10 0 0 0 22 12z"/>
+        </svg>
       </a>
     </p>
-    <p>© 2025 WR1TE Studio. Wszystkie prawa zastrzeżone.</p>
+    <p>© 2025 WR1TE Studio. Wszelkie prawa zastrzeżone.</p>
   </footer>
 </body>
 </html>
