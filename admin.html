@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+  <?php
+session_start();
+if (!isset($_SESSION['admin'])) {
+  header("Location: team-login.html");
+  exit;
+}
+?>
   <meta charset="UTF-8">
   <select id="adminSelect">
   <option disabled selected>Wybierz admina</option>
