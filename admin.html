@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Admina WR1TE</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #2ecc71;
+    }
+
+    #users {
+      margin-bottom: 20px;
+    }
+
+    #chatBox {
+      background: white;
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+    }
+
+    #chatMessages {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      font-size: 14px;
+      white-space: pre-wrap;
+      background: #fafafa;
+      margin-bottom: 10px;
+    }
+
+    #replyForm {
+      display: flex;
+      gap: 10px;
+    }
+
+    #replyInput {
+      flex: 1;
+      padding: 8px;
+      font-size: 14px;
+    }
+
+    #sendBtn {
+      background: #2ecc71;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    select {
+      padding: 6px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>WR1TE - Admin Chat Panel</h1>
+
+  <div id="users">
+    <label for="userSelect">Wybierz użytkownika:</label>
+    <select id="userSelect"></select>
+    <button onclick="loadChat()">Załaduj</button>
+  </div>
+
+  <div id="chatBox">
+    <div id="chatMessages">Wybierz użytkownika, aby zobaczyć czat</div>
+    <form id="replyForm" onsubmit="sendReply(event)">
+      <input type="text" id="replyInput" placeholder="Odpowiedź..." required />
+      <button type="submit" id="sendBtn">Wyślij</button>
+    </form>
+  </div>
+
+  <script>
+    const userSelect = document.getElementById("userSelect");
+    const chatMessages = document.getElementById("chatMessages");
+    const replyInput = document.getElementById("replyInput");
+
+    async function fetchUsers() {
+      const res = await fetch('list-users.php');
+      const users = await res.json();
+      users.forEach(user => {
+        const opt = document.createElement("option");
+        opt.value = user;
+        opt.textContent = user;
+        userSelect.appendChild(opt);
+      });
+    }
+
+    async function loadChat() {
+      const user = userSelect.value;
+      if (!user) return;
+      const res = await fetch(`chat-data/${user}`);
+      const text = await res.text();
+      chatMessages.textContent = text;
+    }
+
+    async function sendReply(e) {
+      e.preventDefault();
+      const user = userSelect.value;
+      const message = replyInput.value.trim();
+      if (!user || !message) return;
+
+      await fetch('reply.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user, message })
+      });
+
+      replyInput.value = "";
+      loadChat();
+    }
+
+    fetchUsers();
+  </script>
+</body>
+</html>
