@@ -9,7 +9,7 @@ if (!$data || !isset($data["message"]) || !isset($data["category"])) {
 $msg = htmlspecialchars($data["message"]);
 $category = strtolower(trim($data["category"]));
 $subject = "Nowa wiadomość z chatu WR1TE - Kategoria: " . ucfirst($category);
-$headers = "From: WR1TE Chat <chat@wr1testudio.pl>\r\n" .
+$headers = "From: WR1TE Chat <kontakt.wr1te@gmail.com>\r\n" .
            "Content-Type: text/plain; charset=UTF-8\r\n";
 
 $dziedziny = [
