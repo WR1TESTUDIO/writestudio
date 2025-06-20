@@ -1,7 +1,17 @@
-<form action="team-login.php" method="POST">
-  <input name="login" placeholder="Login" required>
-  <input name="password" type="password" placeholder="Hasło" required>
-  <div class="g-recaptcha" data-sitekey="TWÓJ_SITE_KEY_RECAPTCHA"></div>
-  <button type="submit">Zaloguj</button>
+<!DOCTYPE html>
+<html lang="pl">
+<head><meta charset="UTF-8"><title>Login</title></head>
+<body>
+<h2>Zaloguj się jako Admin</h2>
+<p>Ten panel to tylko placeholder.</p>
+<a href="admin.html">Wejdź do panelu admina</a>
+</body>
+</html>
+
+
+// index.html (dodanie użytkownika)
+<form action="add-user.php" method="POST">
+  <label for="username">Nazwa użytkownika:</label>
+  <input type="text" name="username" required />
+  <button type="submit">Dołącz</button>
 </form>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
