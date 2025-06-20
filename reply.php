@@ -1,9 +1,8 @@
 <?php
 $data = json_decode(file_get_contents('php://input'), true);
-
-$userId = basename($data['userId']);
-$message = trim($data['message']);
-$admin = htmlspecialchars($data['admin']);
+$userId = basename($data['userId'] ?? '');
+$message = trim($data['message'] ?? '');
+$admin = htmlspecialchars($data['admin'] ?? '');
 
 if ($userId && $message && $admin) {
     $file = "chat-data/$userId.txt";
@@ -14,4 +13,3 @@ if ($userId && $message && $admin) {
     http_response_code(400);
     echo json_encode(["error" => "Nieprawidłowe dane"]);
 }
-?>
