@@ -130,5 +130,34 @@
 
     fetchUsers();
   </script>
+  <script>
+  let selectedAdmin = "";
+
+  document.getElementById('adminSelect').addEventListener('change', function() {
+    selectedAdmin = this.value;
+    localStorage.setItem("adminName", selectedAdmin);
+    alert("Zalogowano jako: " + selectedAdmin);
+  });
+
+  // Przy odpowiedzi:
+  async function sendReply(userId, message) {
+    const admin = localStorage.getItem("adminName");
+    if (!admin) {
+      alert("Wybierz admina przed odpowiedzią!");
+      return;
+    }
+
+    await fetch('reply.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: userId,
+        message: message,
+        admin: admin
+      })
+    });
+  }
+</script>
+
 </body>
 </html>
