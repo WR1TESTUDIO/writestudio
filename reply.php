@@ -1,22 +1,17 @@
 <?php
-// Odbierz dane JSON z żądania
-$data = json_decode(file_get_contents("php://input"), true);
+$data = json_decode(file_get_contents('php://input'), true);
 
-// Sprawdź czy dane są poprawne
-if (!isset($data['user']) || !isset($data['message'])) {
-    http_response_code(400);
-    echo "Błąd: brak danych.";
-    exit;
-}
-
-$userFile = basename($data['user']); // zabezpieczenie przed ../
+$userId = basename($data['userId']);
 $message = trim($data['message']);
-$line = "WR1TE: $message\n";
+$admin = htmlspecialchars($data['admin']);
 
-// Ścieżka do pliku użytkownika
-$filePath = __DIR__ . "/chat-data/$userFile";
-
-// Dopisz wiadomość do pliku
-file_put_contents($filePath, $line, FILE_APPEND | LOCK_EX);
-
-echo "Wysłano.";
+if ($userId && $message && $admin) {
+    $file = "chat-data/$userId.txt";
+    $line = "[WR1TE - $admin] $message\n";
+    file_put_contents($file, $line, FILE_APPEND | LOCK_EX);
+    echo json_encode(["status" => "success"]);
+} else {
+    http_response_code(400);
+    echo json_encode(["error" => "Nieprawidłowe dane"]);
+}
+?>
