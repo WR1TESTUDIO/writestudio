@@ -286,4 +286,154 @@
     <p>© 2025 WR1TE Studio. Wszelkie prawa zastrzeżone.</p>
   </footer>
 </body>
+  <!-- WR1TE Studio Live Chat -->
+<style>
+  #chatWidget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    font-family: Arial, sans-serif;
+  }
+
+  #chatToggle {
+    background: linear-gradient(270deg, #2ecc71, #3498db, #2ecc71);
+    background-size: 600% 600%;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    animation: gradientAnimation 8s ease infinite;
+    font-size: 28px;
+  }
+
+  #chatBox {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    width: 320px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    overflow: hidden;
+  }
+
+  #chatHeader {
+    background: linear-gradient(90deg, #2ecc71, #3498db);
+    color: white;
+    padding: 12px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  #categorySelect {
+    width: 90%;
+    margin: 10px auto;
+    font-size: 14px;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  #chatMessages {
+    height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  #chatForm {
+    display: flex;
+    border-top: 1px solid #eee;
+  }
+
+  #chatInput {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    font-size: 14px;
+  }
+
+  #chatSend {
+    background-color: #2ecc71;
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  @keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+</style>
+
+<div id="chatWidget">
+  <button id="chatToggle">💬</button>
+  <div id="chatBox">
+    <div id="chatHeader">WR1TE Chat</div>
+    <select id="categorySelect">
+      <option value="">Wybierz kategorię</option>
+      <option value="Tekst">Tekst</option>
+      <option value="Muzyka">Muzyka</option>
+      <option value="Dystrybucja">Dystrybucja</option>
+      <option value="Mix/Master">Mix/Master</option>
+      <option value="Grafika">Grafika</option>
+      <option value="Video">Video</option>
+    </select>
+    <div id="chatMessages">
+      <div><em>Masz pytanie? Napisz do nas!</em></div>
+    </div>
+    <form id="chatForm">
+      <input type="text" id="chatInput" placeholder="Wpisz wiadomość..." required />
+      <button type="submit" id="chatSend">➤</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById('chatToggle');
+  const chatBox = document.getElementById('chatBox');
+  const chatForm = document.getElementById('chatForm');
+  const chatInput = document.getElementById('chatInput');
+  const chatMessages = document.getElementById('chatMessages');
+  const categorySelect = document.getElementById('categorySelect');
+
+  toggleBtn.addEventListener('click', () => {
+    chatBox.style.display = chatBox.style.display === 'flex' ? 'none' : 'flex';
+  });
+
+  chatForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = chatInput.value.trim();
+    const category = categorySelect.value;
+    if (!msg || !category) {
+      alert('Wpisz wiadomość i wybierz kategorię!');
+      return;
+    }
+
+    chatMessages.innerHTML += `<div><strong>Ty:</strong> ${msg} <em>(${category})</em></div>`;
+    chatInput.value = "";
+
+    try {
+      await fetch("send.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: msg, category })
+      });
+      chatMessages.innerHTML += `<div><strong>WR1TE:</strong> Dziękujemy za wiadomość. Odezwiemy się wkrótce 🙌🏻</div>`;
+    } catch (err) {
+      chatMessages.innerHTML += `<div><strong>WR1TE:</strong> Ups! Błąd połączenia.</div>`;
+    }
+
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  });
+</script>
+  
 </html>
