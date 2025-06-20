@@ -1,171 +1,83 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <?php
-  session_start();
-  if (!isset($_SESSION['admin'])) {
-    header("Location: team-login.html");
-    exit;
-  }
-  ?>
   <meta charset="UTF-8">
-  <title>Panel Admina WR1TE</title>
+  <title>WR1TE - Admin Panel</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      padding: 20px;
-    }
-
-    h1 {
-      color: #2ecc71;
-    }
-
-    #users {
-      margin-bottom: 20px;
-    }
-
-    #chatBox {
-      background: white;
-      border-radius: 12px;
-      padding: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      max-width: 600px;
-    }
-
-    #chatMessages {
-      height: 300px;
-      overflow-y: auto;
-      border: 1px solid #ccc;
-      padding: 10px;
-      font-size: 14px;
-      white-space: pre-wrap;
-      background: #fafafa;
-      margin-bottom: 10px;
-    }
-
-    #replyForm {
-      display: flex;
-      gap: 10px;
-    }
-
-    #replyInput {
-      flex: 1;
-      padding: 8px;
-      font-size: 14px;
-    }
-
-    #sendBtn {
-      background: #2ecc71;
-      color: white;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    select {
-      padding: 6px;
-      font-size: 14px;
-    }
-
-    #adminInfo {
-      margin-top: 15px;
-      font-style: italic;
-      color: #333;
-    }
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
+    h1 { color: #2ecc71; }
+    select, button, input { padding: 6px; margin: 5px; }
+    #chatMessages { height: 250px; overflow-y: scroll; background: #fff; border: 1px solid #ccc; padding: 10px; }
   </style>
 </head>
 <body>
-  <h1>WR1TE - Admin Chat Panel</h1>
+<h1>WR1TE - Admin Chat Panel</h1>
+<select id="adminSelect">
+  <option disabled selected>Wybierz admina</option>
+  <option value="Sandra">Sandra</option>
+  <option value="Szost">Szost</option>
+  <option value="NateS">NateS</option>
+  <option value="Amelia">Amelia</option>
+  <option value="Lesser">Lesser</option>
+</select>
 
-  <label for="adminSelect">Zaloguj jako admin:</label>
-  <select id="adminSelect">
-    <option disabled selected>Wybierz admina</option>
-    <option value="Sandra">Sandra</option>
-    <option value="Szost">Szost</option>
-    <option value="NateS">NateS</option>
-    <option value="Amelia">Amelia</option>
-    <option value="Lesser">Lesser</option>
-  </select>
-  <div id="adminInfo"></div>
+<div>
+  <label for="userSelect">Użytkownik:</label>
+  <select id="userSelect"></select>
+  <button onclick="loadChat()">Załaduj czat</button>
+</div>
 
-  <div id="users">
-    <label for="userSelect">Wybierz użytkownika:</label>
-    <select id="userSelect"></select>
-    <button onclick="loadChat()">Załaduj</button>
-  </div>
+<div id="chatMessages">Wybierz użytkownika, aby zobaczyć wiadomości</div>
+<form onsubmit="sendReply(event)">
+  <input type="text" id="replyInput" placeholder="Odpowiedź..." required />
+  <button type="submit">Wyślij</button>
+</form>
 
-  <div id="chatBox">
-    <div id="chatMessages">Wybierz użytkownika, aby zobaczyć czat</div>
-    <form id="replyForm" onsubmit="sendReply(event)">
-      <input type="text" id="replyInput" placeholder="Odpowiedź..." required />
-      <button type="submit" id="sendBtn">Wyślij</button>
-    </form>
-  </div>
+<script>
+let selectedAdmin = "";
 
-  <script>
-    const adminRoles = {
-      Sandra: ["tekst", "muzyka"],
-      Szost: ["tekst", "muzyka", "Mix/Master", "dystrybucja"],
-      NateS: ["tekst", "muzyka"],
-      Amelia: ["tekst", "muzyka"],
-      Lesser: ["grafika", "video"]
-    };
+async function fetchUsers() {
+  const res = await fetch('list-users.php');
+  const users = await res.json();
+  const select = document.getElementById("userSelect");
+  select.innerHTML = ''; // reset listy
+  users.forEach(user => {
+    const opt = document.createElement("option");
+    opt.value = user;
+    opt.textContent = user;
+    select.appendChild(opt);
+  });
+}
 
-    let selectedAdmin = "";
+document.getElementById('adminSelect').addEventListener('change', function () {
+  selectedAdmin = this.value;
+  localStorage.setItem("adminName", selectedAdmin);
+});
 
-    document.getElementById('adminSelect').addEventListener('change', function() {
-      selectedAdmin = this.value;
-      localStorage.setItem("adminName", selectedAdmin);
-      const roles = adminRoles[selectedAdmin] || [];
-      document.getElementById('adminInfo').textContent = `Zakres: ${roles.join(", ")}`;
-      alert("Zalogowano jako: " + selectedAdmin);
-    });
+async function loadChat() {
+  const user = document.getElementById("userSelect").value;
+  if (!user) return;
+  const res = await fetch(`chat-data/${user}.txt`);
+  const text = await res.text();
+  document.getElementById("chatMessages").textContent = text;
+}
 
-    async function fetchUsers() {
-      const res = await fetch('list-users.php');
-      const users = await res.json();
-      const userSelect = document.getElementById("userSelect");
-      users.forEach(user => {
-        const opt = document.createElement("option");
-        opt.value = user;
-        opt.textContent = user;
-        userSelect.appendChild(opt);
-      });
-    }
+async function sendReply(e) {
+  e.preventDefault();
+  const user = document.getElementById("userSelect").value;
+  const message = document.getElementById("replyInput").value.trim();
+  const admin = localStorage.getItem("adminName");
+  if (!admin || !message) return;
+  await fetch('reply.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user, message, admin })
+  });
+  document.getElementById("replyInput").value = "";
+  loadChat();
+}
 
-    async function loadChat() {
-      const user = document.getElementById("userSelect").value;
-      if (!user) return;
-      const res = await fetch(`chat-data/${user}`);
-      const text = await res.text();
-      document.getElementById("chatMessages").textContent = text;
-    }
-
-    async function sendReply(e) {
-      e.preventDefault();
-      const user = document.getElementById("userSelect").value;
-      const message = document.getElementById("replyInput").value.trim();
-      const admin = localStorage.getItem("adminName");
-
-      if (!admin) {
-        alert("Wybierz admina przed odpowiedzią!");
-        return;
-      }
-      if (!user || !message) return;
-
-      await fetch('reply.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: user, message: message, admin: admin })
-      });
-
-      document.getElementById("replyInput").value = "";
-      loadChat();
-    }
-
-    fetchUsers();
-  </script>
+fetchUsers();
+</script>
 </body>
 </html>
