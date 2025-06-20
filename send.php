@@ -2,17 +2,30 @@
 $data = json_decode(file_get_contents("php://input"), true);
 if (!$data || !isset($data["message"]) || !isset($data["category"])) {
   http_response_code(400);
-  echo "Błąd danych wejściowych.";
+  echo json_encode(["error" => "Nieprawidłowe dane"]);
   exit;
 }
 
-$msg = htmlspecialchars($data["message"]);
+$msg = htmlspecialchars(trim($data["message"]));
 $category = strtolower(trim($data["category"]));
-$subject = "Nowa wiadomość z chatu WR1TE - Kategoria: " . ucfirst($category);
-$headers = "From: WR1TE Chat <kontakt.wr1te@gmail.com>\r\n" .
-           "Content-Type: text/plain; charset=UTF-8\r\n";
+
+// GENERUJ ID użytownika (np. IP lub sesja)
+$userId = $_SERVER['REMOTE_ADDR'];
+$chatFile = "chat-data/$userId.txt";
+
+// Zapisz do czatu
+file_put_contents($chatFile, "[USER - $userId] $msg\n", FILE_APPEND);
+
+// OGÓLNE powiadomienie do całego zespołu
+$subjectGeneral = "📥 Nowa wiadomość na WR1TE Chat";
+$allEmails = [
+  "nates1ore@gmail.com", "sandrafieske@gmail.com",
+  "szymon.szostak4@gmail.com", "amelia.music@wp.pl",
+  "lesser.kontakt@gmail.com"
+];
 
 $dziedziny = [
+  "ogólne" => ["nates1ore@gmail.com", "sandrafieske@gmail.com", "szymon.szostak4@gmail.com", "amelia.music@wp.pl"],["lesser.kontakt@gmail.com"]
   "tekst" => ["nates1ore@gmail.com", "sandrafieske@gmail.com", "szymon.szostak4@gmail.com", "amelia.music@wp.pl"],
   "muzyka" => ["nates1ore@gmail.com", "sandrafieske@gmail.com", "szymon.szostak4@gmail.com", "amelia.music@wp.pl"],
   "dystrybucja" => ["szymon.szostak4@gmail.com"],
@@ -21,21 +34,20 @@ $dziedziny = [
   "video" => ["lesser.kontakt@gmail.com"]
 ];
 
-// Sprawdź czy kategoria istnieje i wybierz odpowiednie maile
-if (array_key_exists($category, $dziedziny)) {
-  $emails = $dziedziny[$category];
-} else {
-  // Jeśli kategoria nieznana, wyślij do wszystkich jako awaryjne rozwiązanie
-  $emails = array_unique(array_merge(...array_values($dziedziny)));
+$categoryTitle = ucfirst($category);
+$subjectCat = "📬 WR1TE – Nowa wiadomość [Kategoria: $categoryTitle]";
+$body = "Nowa wiadomość użytkownika $userId:\n\n$msg\n\nKategoria: $categoryTitle";
+
+$toCategory = $dziedziny[$category] ?? $allEmails;
+
+// Wyślij mail do członków kategorii
+foreach ($toCategory as $email) {
+  mail($email, $subjectCat, $body, "From: WR1TE Chat <kontakt@wr1te.pl>\r\nContent-Type: text/plain; charset=UTF-8");
 }
 
-// Wyślij maila do każdego odbiorcy z danej kategorii
-foreach ($emails as $email) {
-  mail($email, $subject, $msg, $headers);
+// Wyślij ogólne powiadomienie do wszystkich (np. osobna treść)
+foreach ($allEmails as $email) {
+  mail($email, $subjectGeneral, "Nowa wiadomość od użytkownika ($userId): $msg", "From: WR1TE Chat <kontakt@wr1te.pl>");
 }
 
-// Zapisz wiadomość do pliku (opcjonalnie)
-file_put_contents("chat.txt", "Kategoria: $category\nWiadomość: $msg\n\n", FILE_APPEND);
-
-echo "OK";
-?>
+echo json_encode(["status" => "OK"]);
