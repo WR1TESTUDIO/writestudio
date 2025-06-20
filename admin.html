@@ -137,34 +137,85 @@ if (!isset($_SESSION['admin'])) {
 
     fetchUsers();
   </script>
-  <script>
-  let selectedAdmin = "";
+<script>
+const categoryAdmins = {
+  tekst: ["Sandra", "Szost", "NateS", "Amelia"],
+  muzyka: ["Sandra", "Szost", "NateS", "Amelia"],
+  "Mix/Master": ["Szost"],
+  dystrybucja: ["Szost"],
+  grafika: ["Lesser"],
+  video: ["Lesser"]
+};
 
-  document.getElementById('adminSelect').addEventListener('change', function() {
-    selectedAdmin = this.value;
-    localStorage.setItem("adminName", selectedAdmin);
-    alert("Zalogowano jako: " + selectedAdmin);
+const adminEmails = {
+  Sandra: "sandrafieske@gmail.com",
+  Szost: "szymon.szostak4@gmail.com",
+  NateS: "nates1ore@gmail.com",
+  Amelia: "amelia.music@wp.pl",
+  Lesser: "lesser.kontakt@gmail.com"
+};
+
+let selectedAdmin = "";
+
+document.getElementById('adminSelect').addEventListener('change', function () {
+  selectedAdmin = this.value;
+  localStorage.setItem("adminName", selectedAdmin);
+  alert("Zalogowano jako: " + selectedAdmin);
+
+  const email = adminEmails[selectedAdmin] || "Brak maila";
+  document.getElementById("adminEmail").textContent = "📧 " + email;
+});
+
+function showAdminsForCategory(category) {
+  const list = categoryAdmins[category.toLowerCase()];
+  if (!list) return "Brak przypisanych adminów";
+  return list.join(", ");
+}
+
+function guessCategoryFromUser(userId) {
+  // userId typu 'muzyka-192.168.1.1' -> 'muzyka'
+  return userId.split("-")[0];
+}
+
+async function loadChat() {
+  const user = userSelect.value;
+  if (!user) return;
+
+  const res = await fetch(`chat-data/${user}`);
+  const text = await res.text();
+
+  const category = guessCategoryFromUser(user);
+  const admins = showAdminsForCategory(category);
+
+  chatMessages.textContent =
+    `🗂 Kategoria: ${category.toUpperCase()}\n👥 Admini: ${admins}\n\n` +
+    text;
+}
+
+async function sendReply(e) {
+  e.preventDefault();
+  const userId = userSelect.value;
+  const message = replyInput.value.trim();
+  const admin = localStorage.getItem("adminName");
+
+  if (!userId || !message) return;
+
+  if (!admin) {
+    alert("Wybierz admina przed odpowiedzią!");
+    return;
+  }
+
+  await fetch('reply.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId, message, admin })
   });
 
-  // Przy odpowiedzi:
-  async function sendReply(userId, message) {
-    const admin = localStorage.getItem("adminName");
-    if (!admin) {
-      alert("Wybierz admina przed odpowiedzią!");
-      return;
-    }
-
-    await fetch('reply.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        userId: userId,
-        message: message,
-        admin: admin
-      })
-    });
-  }
+  replyInput.value = "";
+  loadChat();
+}
 </script>
+
 
 </body>
 </html>
