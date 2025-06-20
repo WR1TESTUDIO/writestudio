@@ -2,21 +2,13 @@
 <html lang="pl">
 <head>
   <?php
-session_start();
-if (!isset($_SESSION['admin'])) {
-  header("Location: team-login.html");
-  exit;
-}
-?>
+  session_start();
+  if (!isset($_SESSION['admin'])) {
+    header("Location: team-login.html");
+    exit;
+  }
+  ?>
   <meta charset="UTF-8">
-  <select id="adminSelect">
-  <option disabled selected>Wybierz admina</option>
-  <option value="Sandra">Sandra</option>
-  <option value="Szost">Szost</option>
-  <option value="NateS">NateS</option>
-  <option value="Amelia">Amelia</option>
-  <option value="Lesser">Lesser</option>
-</select>
   <title>Panel Admina WR1TE</title>
   <style>
     body {
@@ -76,10 +68,27 @@ if (!isset($_SESSION['admin'])) {
       padding: 6px;
       font-size: 14px;
     }
+
+    #adminInfo {
+      margin-top: 15px;
+      font-style: italic;
+      color: #333;
+    }
   </style>
 </head>
 <body>
   <h1>WR1TE - Admin Chat Panel</h1>
+
+  <label for="adminSelect">Zaloguj jako admin:</label>
+  <select id="adminSelect">
+    <option disabled selected>Wybierz admina</option>
+    <option value="Sandra">Sandra</option>
+    <option value="Szost">Szost</option>
+    <option value="NateS">NateS</option>
+    <option value="Amelia">Amelia</option>
+    <option value="Lesser">Lesser</option>
+  </select>
+  <div id="adminInfo"></div>
 
   <div id="users">
     <label for="userSelect">Wybierz użytkownika:</label>
@@ -96,13 +105,28 @@ if (!isset($_SESSION['admin'])) {
   </div>
 
   <script>
-    const userSelect = document.getElementById("userSelect");
-    const chatMessages = document.getElementById("chatMessages");
-    const replyInput = document.getElementById("replyInput");
+    const adminRoles = {
+      Sandra: ["tekst", "muzyka"],
+      Szost: ["tekst", "muzyka", "Mix/Master", "dystrybucja"],
+      NateS: ["tekst", "muzyka"],
+      Amelia: ["tekst", "muzyka"],
+      Lesser: ["grafika", "video"]
+    };
+
+    let selectedAdmin = "";
+
+    document.getElementById('adminSelect').addEventListener('change', function() {
+      selectedAdmin = this.value;
+      localStorage.setItem("adminName", selectedAdmin);
+      const roles = adminRoles[selectedAdmin] || [];
+      document.getElementById('adminInfo').textContent = `Zakres: ${roles.join(", ")}`;
+      alert("Zalogowano jako: " + selectedAdmin);
+    });
 
     async function fetchUsers() {
       const res = await fetch('list-users.php');
       const users = await res.json();
+      const userSelect = document.getElementById("userSelect");
       users.forEach(user => {
         const opt = document.createElement("option");
         opt.value = user;
@@ -112,110 +136,36 @@ if (!isset($_SESSION['admin'])) {
     }
 
     async function loadChat() {
-      const user = userSelect.value;
+      const user = document.getElementById("userSelect").value;
       if (!user) return;
       const res = await fetch(`chat-data/${user}`);
       const text = await res.text();
-      chatMessages.textContent = text;
+      document.getElementById("chatMessages").textContent = text;
     }
 
     async function sendReply(e) {
       e.preventDefault();
-      const user = userSelect.value;
-      const message = replyInput.value.trim();
+      const user = document.getElementById("userSelect").value;
+      const message = document.getElementById("replyInput").value.trim();
+      const admin = localStorage.getItem("adminName");
+
+      if (!admin) {
+        alert("Wybierz admina przed odpowiedzią!");
+        return;
+      }
       if (!user || !message) return;
 
       await fetch('reply.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user, message })
+        body: JSON.stringify({ userId: user, message: message, admin: admin })
       });
 
-      replyInput.value = "";
+      document.getElementById("replyInput").value = "";
       loadChat();
     }
 
     fetchUsers();
   </script>
-<script>
-const categoryAdmins = {
-  tekst: ["Sandra", "Szost", "NateS", "Amelia"],
-  muzyka: ["Sandra", "Szost", "NateS", "Amelia"],
-  "Mix/Master": ["Szost"],
-  dystrybucja: ["Szost"],
-  grafika: ["Lesser"],
-  video: ["Lesser"]
-};
-
-const adminEmails = {
-  Sandra: "sandrafieske@gmail.com",
-  Szost: "szymon.szostak4@gmail.com",
-  NateS: "nates1ore@gmail.com",
-  Amelia: "amelia.music@wp.pl",
-  Lesser: "lesser.kontakt@gmail.com"
-};
-
-let selectedAdmin = "";
-
-document.getElementById('adminSelect').addEventListener('change', function () {
-  selectedAdmin = this.value;
-  localStorage.setItem("adminName", selectedAdmin);
-  alert("Zalogowano jako: " + selectedAdmin);
-
-  const email = adminEmails[selectedAdmin] || "Brak maila";
-  document.getElementById("adminEmail").textContent = "📧 " + email;
-});
-
-function showAdminsForCategory(category) {
-  const list = categoryAdmins[category.toLowerCase()];
-  if (!list) return "Brak przypisanych adminów";
-  return list.join(", ");
-}
-
-function guessCategoryFromUser(userId) {
-  // userId typu 'muzyka-192.168.1.1' -> 'muzyka'
-  return userId.split("-")[0];
-}
-
-async function loadChat() {
-  const user = userSelect.value;
-  if (!user) return;
-
-  const res = await fetch(`chat-data/${user}`);
-  const text = await res.text();
-
-  const category = guessCategoryFromUser(user);
-  const admins = showAdminsForCategory(category);
-
-  chatMessages.textContent =
-    `🗂 Kategoria: ${category.toUpperCase()}\n👥 Admini: ${admins}\n\n` +
-    text;
-}
-
-async function sendReply(e) {
-  e.preventDefault();
-  const userId = userSelect.value;
-  const message = replyInput.value.trim();
-  const admin = localStorage.getItem("adminName");
-
-  if (!userId || !message) return;
-
-  if (!admin) {
-    alert("Wybierz admina przed odpowiedzią!");
-    return;
-  }
-
-  await fetch('reply.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userId, message, admin })
-  });
-
-  replyInput.value = "";
-  loadChat();
-}
-</script>
-
-
 </body>
 </html>
