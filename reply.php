@@ -1,15 +1,12 @@
 <?php
-$data = json_decode(file_get_contents('php://input'), true);
-$userId = basename($data['userId'] ?? '');
-$message = trim($data['message'] ?? '');
-$admin = htmlspecialchars($data['admin'] ?? '');
+$data = json_decode(file_get_contents("php://input"), true);
+$user = $data['user'] ?? '';
+$message = $data['message'] ?? '';
+$admin = $data['admin'] ?? '';
 
-if ($userId && $message && $admin) {
-    $file = "chat-data/$userId.txt";
-    $line = "[WR1TE - $admin] $message\n";
-    file_put_contents($file, $line, FILE_APPEND | LOCK_EX);
-    echo json_encode(["status" => "success"]);
-} else {
-    http_response_code(400);
-    echo json_encode(["error" => "Nieprawidłowe dane"]);
+if ($user && $message && $admin) {
+  $filename = __DIR__ . "/chat-data/" . $user . ".txt";
+  $line = "[$admin] $message\n";
+  file_put_contents($filename, $line, FILE_APPEND);
 }
+?>
